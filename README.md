@@ -35,6 +35,17 @@ Sample product: Book with name = “The Little Prince”, UPC=12345, price=$20.2
 Product price reported as $20.25 before tax and $24.30 after 20% tax.  
 Product price reported as $20.25 before tax and $24.50 after 21% tax.
 
+*Implementation notes:*
+I want a reusable PriceCalculator that calculates the PriceResult for a given Product. The PriceCalculator allows the definition of the TaxRate or use the default 20%.
+
+ClientApi:
+* Implicit default tax rate 20% : PriceResult result1 = new PriceCalculator().Calculate(new Product(...));
+* Explicit default tax rate 20% : PriceResult result2 = new PriceCalculator(0.2m).Calculate(new Product(...));
+
+
+Product will store Title, UPC and Amount.The Product Amount is of type MoneyCurrency. 
+MoneyCurrency is a ValueObject that stores an decimal Value and string Currency. Currency is hardcoded as $.
+
 **2. DISCOUNT**  
 Customer chooses to apply a relative discount to all products.  
 Discount is specified as a percentage relative to price. Tax is always applied to a price before it was deduced, i.e. discount doesn’t reduce tax amount (see example below).  
